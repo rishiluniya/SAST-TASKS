@@ -1,0 +1,14 @@
+[
+  {
+    "cwe": "CWE-89",
+    "file": "apps/node-ledger/src/data/reportRepository.mjs",
+    "line": 14,
+    "message": "raw query built from request fields"
+  },
+  {
+    "cwe": "CWE-22",
+    "file": "apps/node-ledger/src/features/exports/exportController.mjs",
+    "line": 10,
+    "message": "path reaches readFileSync"
+  }
+]

@@ -1,0 +1,496 @@
+[
+  {
+    "id": "LW89-001",
+    "variant": "case",
+    "cwe": "CWE-89",
+    "title": "ledger query flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/data/reportRepository.mjs",
+      "lineStart": 14,
+      "lineEnd": 16,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/reports/reportController.mjs",
+        "lineStart": 11,
+        "lineEnd": 17
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW89-002",
+    "variant": "control",
+    "cwe": "CWE-89",
+    "title": "ledger query flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/data/reportRepository.mjs",
+      "lineStart": 23,
+      "lineEnd": 26,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW89-003",
+    "variant": "case",
+    "cwe": "CWE-89",
+    "title": "ledger query flow 3",
+    "sink": {
+      "file": "apps/node-ledger/src/data/reportRepository.mjs",
+      "lineStart": 35,
+      "lineEnd": 37,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/reports/reportController.mjs",
+        "lineStart": 31,
+        "lineEnd": 40
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW89-004",
+    "variant": "control",
+    "cwe": "CWE-89",
+    "title": "ledger query flow 4",
+    "sink": {
+      "file": "apps/node-ledger/src/data/reportRepository.mjs",
+      "lineStart": 40,
+      "lineEnd": 42,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW79-001",
+    "variant": "case",
+    "cwe": "CWE-79",
+    "title": "table rendering flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/template.mjs",
+      "lineStart": 17,
+      "lineEnd": 18,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/data/db.mjs",
+        "lineStart": 13,
+        "lineEnd": 18
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW79-002",
+    "variant": "control",
+    "cwe": "CWE-79",
+    "title": "table rendering flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/template.mjs",
+      "lineStart": 21,
+      "lineEnd": 22,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW22-001",
+    "variant": "case",
+    "cwe": "CWE-22",
+    "title": "export file flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/exports/exportController.mjs",
+      "lineStart": 10,
+      "lineEnd": 11,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/lib/pathGuard.mjs",
+        "lineStart": 5,
+        "lineEnd": 12
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW22-002",
+    "variant": "control",
+    "cwe": "CWE-22",
+    "title": "export file flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/exports/exportController.mjs",
+      "lineStart": 17,
+      "lineEnd": 18,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW918-001",
+    "variant": "case",
+    "cwe": "CWE-918",
+    "title": "integration callback flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/integrations/integrationController.mjs",
+      "lineStart": 15,
+      "lineEnd": 16,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/lib/netGuard.mjs",
+        "lineStart": 5,
+        "lineEnd": 8
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW918-002",
+    "variant": "control",
+    "cwe": "CWE-918",
+    "title": "integration callback flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/integrations/integrationController.mjs",
+      "lineStart": 21,
+      "lineEnd": 22,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW78-001",
+    "variant": "case",
+    "cwe": "CWE-78",
+    "title": "diagnostics command flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 20,
+      "lineEnd": 22,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW78-002",
+    "variant": "control",
+    "cwe": "CWE-78",
+    "title": "diagnostics command flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 27,
+      "lineEnd": 31,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW94-001",
+    "variant": "case",
+    "cwe": "CWE-94",
+    "title": "expression rendering flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 35,
+      "lineEnd": 37,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW94-002",
+    "variant": "control",
+    "cwe": "CWE-94",
+    "title": "expression rendering flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 41,
+      "lineEnd": 44,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW327-001",
+    "variant": "case",
+    "cwe": "CWE-327",
+    "title": "token issuance flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 48,
+      "lineEnd": 50,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW327-002",
+    "variant": "control",
+    "cwe": "CWE-327",
+    "title": "token issuance flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 54,
+      "lineEnd": 56,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW862-001",
+    "variant": "case",
+    "cwe": "CWE-862",
+    "title": "admin operation flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 19,
+      "lineEnd": 22,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW862-002",
+    "variant": "control",
+    "cwe": "CWE-862",
+    "title": "admin operation flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/admin/adminController.mjs",
+      "lineStart": 26,
+      "lineEnd": 31,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW863-001",
+    "variant": "case",
+    "cwe": "CWE-863",
+    "title": "tenant invoice flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/billing/billingController.mjs",
+      "lineStart": 7,
+      "lineEnd": 10,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW863-002",
+    "variant": "control",
+    "cwe": "CWE-863",
+    "title": "tenant invoice flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/billing/billingController.mjs",
+      "lineStart": 14,
+      "lineEnd": 17,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW200-001",
+    "variant": "case",
+    "cwe": "CWE-200",
+    "title": "tenant report flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/reports/reportController.mjs",
+      "lineStart": 50,
+      "lineEnd": 52,
+      "window": 2
+    },
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW200-002",
+    "variant": "control",
+    "cwe": "CWE-200",
+    "title": "tenant report flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/reports/reportController.mjs",
+      "lineStart": 55,
+      "lineEnd": 57,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1321-001",
+    "variant": "case",
+    "cwe": "CWE-1321",
+    "title": "profile merge flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/merge.mjs",
+      "lineStart": 3,
+      "lineEnd": 9,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/settings/settingsController.mjs",
+        "lineStart": 18,
+        "lineEnd": 20
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1321-002",
+    "variant": "control",
+    "cwe": "CWE-1321",
+    "title": "profile merge flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/merge.mjs",
+      "lineStart": 14,
+      "lineEnd": 20,
+      "window": 2
+    },
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-001",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "segment rule flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/segmentRules.mjs",
+      "lineStart": 17,
+      "lineEnd": 20,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/segments/segmentController.mjs",
+        "lineStart": 7,
+        "lineEnd": 10
+      },
+      {
+        "file": "apps/node-ledger/src/jobs/segmentJobs.mjs",
+        "lineStart": 4,
+        "lineEnd": 7
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-002",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "segment rule flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/segmentRules.mjs",
+      "lineStart": 23,
+      "lineEnd": 26,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/segments/segmentController.mjs",
+        "lineStart": 14,
+        "lineEnd": 17
+      },
+      {
+        "file": "apps/node-ledger/src/jobs/segmentJobs.mjs",
+        "lineStart": 10,
+        "lineEnd": 13
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW601-001",
+    "variant": "case",
+    "cwe": "CWE-601",
+    "title": "portal continuation flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/features/portal/portalController.mjs",
+      "lineStart": 5,
+      "lineEnd": 8,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/lib/redirects.mjs",
+        "lineStart": 3,
+        "lineEnd": 6
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW601-002",
+    "variant": "control",
+    "cwe": "CWE-601",
+    "title": "portal continuation flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/features/portal/portalController.mjs",
+      "lineStart": 11,
+      "lineEnd": 14,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/lib/redirects.mjs",
+        "lineStart": 9,
+        "lineEnd": 12
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW94-003",
+    "variant": "case",
+    "cwe": "CWE-94",
+    "title": "expression rendering flow 3",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/messageTemplates.mjs",
+      "lineStart": 7,
+      "lineEnd": 11,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/messages/messageController.mjs",
+        "lineStart": 7,
+        "lineEnd": 10
+      },
+      {
+        "file": "apps/node-ledger/src/jobs/messageJobs.mjs",
+        "lineStart": 4,
+        "lineEnd": 7
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW94-004",
+    "variant": "control",
+    "cwe": "CWE-94",
+    "title": "expression rendering flow 4",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/messageTemplates.mjs",
+      "lineStart": 14,
+      "lineEnd": 20,
+      "window": 2
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/messages/messageController.mjs",
+        "lineStart": 14,
+        "lineEnd": 17
+      },
+      {
+        "file": "apps/node-ledger/src/jobs/messageJobs.mjs",
+        "lineStart": 9,
+        "lineEnd": 12
+      }
+    ],
+    "note": "comparison path"
+  }
+]

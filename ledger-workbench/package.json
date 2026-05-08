@@ -1,0 +1,14 @@
+{
+  "name": "ledger-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local Node.js ledger service fixture.",
+  "scripts": {
+    "score": "node tools/score-results.mjs",
+    "smoke": "node tools/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
