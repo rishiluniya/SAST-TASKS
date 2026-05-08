@@ -1,0 +1,3194 @@
+                    
+                    
+┌──────────────────┐
+│ 93 Code Findings │
+└──────────────────┘
+                                                           
+    apps\node-ledger\src\features\admin\adminController.mjs
+   ❯❯❯❱ javascript.express.code.vm-express.vm-express
+          ❰❰ Blocking ❱❱
+          The application might dynamically evaluate untrusted input, which can lead to a code injection    
+          vulnerability. An attacker can execute arbitrary code, potentially gaining complete control of the
+          system. To prevent this vulnerability, avoid executing code containing user input. If this is     
+          unavoidable, validate and sanitize the input, and use safe alternatives for evaluating user input.
+          Details: https://sg.run/KxPNP                                                                     
+                                                                                                            
+           37┆ const result = vm.runInNewContext(formula, { Math, total: Number(ctx.body.total || 0) });
+    
+    
+          Taint comes from:
+    
+           36┆ const formula = boundedText(ctx.body.formula, 200);
+    
+    
+          Taint flows through these intermediate variables:
+    
+           36┆ const formula = boundedText(ctx.body.formula, 200);
+    
+           apps\node-ledger\src\lib\validators.mjs
+    
+            9┆ export function boundedText(value, max = 120) {
+    
+           10┆ return text(value).slice(0, max);
+    
+            5┆ export function text(value, fallback = "") {
+    
+           apps\node-ledger\src\features\admin\adminController.mjs
+    
+           36┆ const formula = boundedText(ctx.body.formula, 200);
+    
+    
+                This is how taint reaches the sink:
+    
+           37┆ const result = vm.runInNewContext(formula, { Math, total: Number(ctx.body.total || 0) });
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ javascript.node-stdlib.cryptography.crypto-weak-algorithm.crypto-weak-algorithm
+          ❰❰ Blocking ❱❱
+          The use of a weak cryptographic algorithm (e.g., SHA-1 or MD5) has been identified. These algorithms
+          are considered insecure due to vulnerabilities that make them susceptible to collision attacks,     
+          allowing attackers to compromise data integrity or security. Replace SHA-1 or MD5 with secure       
+          hashing algorithms, such as: SHA-256 or higher (e.g., SHA-3).                                       
+          Details: https://sg.run/nJgp1                                                                       
+                                                                                                              
+           50┆ const token = crypto.createHash("md5").update(seed).digest("hex");
+    
+    
+          Taint comes from:
+    
+           50┆ const token = crypto.createHash("md5").update(seed).digest("hex");
+    
+    
+                This is how taint reaches the sink:
+    
+           50┆ const token = crypto.createHash("md5").update(seed).digest("hex");
+    
+                                                              
+    apps\node-ledger\src\features\exports\exportController.mjs
+   ❯❯❱ javascript.express.file.fs-express.fs-express
+          ❰❰ Blocking ❱❱
+          The application builds a file path from potentially untrusted data, which can lead to a path        
+          traversal vulnerability. An attacker can manipulate the path which the application uses to access   
+          files. If the application does not validate user input and sanitize file paths, sensitive files such
+          as configuration or user data can be accessed, potentially creating or overwriting files. To prevent
+          this vulnerability, validate and sanitize any input that is used to create references to file paths.
+          Also, enforce strict file access controls. For example, choose privileges allowing public-facing    
+          applications to access only the required files.                                                     
+          Details: https://sg.run/GdqX1                                                                       
+                                                                                                              
+           11┆ const data = fs.readFileSync(file, "utf8");
+    
+    
+          Taint comes from:
+    
+           10┆ const file = resolveExport(ctx.query.file);
+    
+    
+          Taint flows through these intermediate variables:
+    
+           10┆ const file = resolveExport(ctx.query.file);
+    
+           apps\node-ledger\src\lib\pathGuard.mjs
+    
+           11┆ export function resolveExport(name) {
+    
+           12┆ return path.join(EXPORT_ROOT, lightClean(name));
+    
+            5┆ export function lightClean(name) {
+    
+           apps\node-ledger\src\features\exports\exportController.mjs
+    
+           10┆ const file = resolveExport(ctx.query.file);
+    
+    
+                This is how taint reaches the sink:
+    
+           11┆ const data = fs.readFileSync(file, "utf8");
+    
+    
+            ⋮┆----------------------------------------
+           18┆ const data = fs.readFileSync(file, "utf8");
+    
+    
+          Taint comes from:
+    
+           17┆ const file = resolveExportManaged(ctx.query.file);
+    
+    
+          Taint flows through these intermediate variables:
+    
+           17┆ const file = resolveExportManaged(ctx.query.file);
+    
+           apps\node-ledger\src\lib\pathGuard.mjs
+    
+           15┆ export function resolveExportManaged(name) {
+    
+           17┆ const resolved = path.resolve(EXPORT_ROOT, String(name || ""));
+    
+           apps\node-ledger\src\features\exports\exportController.mjs
+    
+           17┆ const file = resolveExportManaged(ctx.query.file);
+    
+    
+                This is how taint reaches the sink:
+    
+           18┆ const data = fs.readFileSync(file, "utf8");
+    
+                                           
+    apps\node-ledger\src\lib\matchPlans.mjs
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           43┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           41┆ export function compilePlanA(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           41┆ export function compilePlanA(record) {
+    
+           43┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           43┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           43┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           42┆ const source = textPattern(record.pattern);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           42┆ const source = textPattern(record.pattern);
+    
+    
+                This is how taint reaches the sink:
+    
+           43┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           48┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           46┆ export function compilePlanB(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           46┆ export function compilePlanB(record) {
+    
+           48┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           48┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           48┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           47┆ const source = catalogPattern(record.kind);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           47┆ const source = catalogPattern(record.kind);
+    
+    
+                This is how taint reaches the sink:
+    
+           48┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           53┆ return new RegExp(source, textFlags(record.options));
+    
+    
+          Taint comes from:
+    
+           51┆ export function compilePlanC(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           51┆ export function compilePlanC(record) {
+    
+           53┆ return new RegExp(source, textFlags(record.options));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           53┆ return new RegExp(source, textFlags(record.options));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           53┆ return new RegExp(source, textFlags(record.options));
+    
+    
+          Taint comes from:
+    
+           52┆ const source = textPattern(record.expression);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           52┆ const source = textPattern(record.expression);
+    
+    
+                This is how taint reaches the sink:
+    
+           53┆ return new RegExp(source, textFlags(record.options));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           56┆ export function compilePlanD(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           56┆ export function compilePlanD(record) {
+    
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+          Taint flows through these intermediate variables:
+    
+           33┆ export function catalogFlags(value) {
+    
+          then reaches:
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           58┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           63┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           61┆ export function compilePlanE(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           61┆ export function compilePlanE(record) {
+    
+           63┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           63┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           63┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           62┆ const source = textPattern(record.include);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           62┆ const source = textPattern(record.include);
+    
+    
+                This is how taint reaches the sink:
+    
+           63┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           68┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+           66┆ export function compilePlanF(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           66┆ export function compilePlanF(record) {
+    
+           67┆ const source = catalogPattern(record.include);
+    
+           29┆ export function catalogPattern(value) {
+    
+           67┆ const source = catalogPattern(record.include);
+    
+    
+                This is how taint reaches the sink:
+    
+           68┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           68┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+           67┆ const source = catalogPattern(record.include);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           67┆ const source = catalogPattern(record.include);
+    
+    
+                This is how taint reaches the sink:
+    
+           68┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           73┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           71┆ export function compilePlanG(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           71┆ export function compilePlanG(record) {
+    
+           73┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           73┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           73┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           72┆ const source = textPattern(record.exclude);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           72┆ const source = textPattern(record.exclude);
+    
+    
+                This is how taint reaches the sink:
+    
+           73┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           78┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+           76┆ export function compilePlanH(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           76┆ export function compilePlanH(record) {
+    
+           77┆ const source = literalPattern(record.exclude);
+    
+           37┆ export function literalPattern(value) {
+    
+           77┆ const source = literalPattern(record.exclude);
+    
+    
+                This is how taint reaches the sink:
+    
+           78┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           78┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+           77┆ const source = literalPattern(record.exclude);
+    
+          Taint flows through these intermediate variables:
+    
+           37┆ export function literalPattern(value) {
+    
+          then reaches:
+    
+           37┆ export function literalPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           77┆ const source = literalPattern(record.exclude);
+    
+    
+                This is how taint reaches the sink:
+    
+           78┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           83┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           81┆ export function compilePlanI(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           81┆ export function compilePlanI(record) {
+    
+           83┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           83┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           83┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           82┆ const source = textPattern(record.keywords);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           82┆ const source = textPattern(record.keywords);
+    
+    
+                This is how taint reaches the sink:
+    
+           83┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           88┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           86┆ export function compilePlanJ(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           86┆ export function compilePlanJ(record) {
+    
+           88┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           88┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           88┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           87┆ const source = catalogPattern(record.keywords);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           87┆ const source = catalogPattern(record.keywords);
+    
+    
+                This is how taint reaches the sink:
+    
+           88┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           93┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           91┆ export function compilePlanK(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           91┆ export function compilePlanK(record) {
+    
+           93┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           93┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           93┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+           92┆ const source = textPattern(record.selector);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           92┆ const source = textPattern(record.selector);
+    
+    
+                This is how taint reaches the sink:
+    
+           93┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           96┆ export function compilePlanL(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           96┆ export function compilePlanL(record) {
+    
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+          Taint flows through these intermediate variables:
+    
+           33┆ export function catalogFlags(value) {
+    
+          then reaches:
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+           98┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          103┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          101┆ export function compilePlanM(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          101┆ export function compilePlanM(record) {
+    
+          103┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          103┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          103┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          102┆ const source = textPattern(record.window);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          102┆ const source = textPattern(record.window);
+    
+    
+                This is how taint reaches the sink:
+    
+          103┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          108┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          106┆ export function compilePlanN(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          106┆ export function compilePlanN(record) {
+    
+          107┆ const source = catalogPattern(record.window);
+    
+           29┆ export function catalogPattern(value) {
+    
+          107┆ const source = catalogPattern(record.window);
+    
+    
+                This is how taint reaches the sink:
+    
+          108┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          108┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          107┆ const source = catalogPattern(record.window);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          107┆ const source = catalogPattern(record.window);
+    
+    
+                This is how taint reaches the sink:
+    
+          108┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          113┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          111┆ export function compilePlanO(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          111┆ export function compilePlanO(record) {
+    
+          113┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          113┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          113┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          112┆ const source = textPattern(record.routing);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          112┆ const source = textPattern(record.routing);
+    
+    
+                This is how taint reaches the sink:
+    
+          113┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          118┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          116┆ export function compilePlanP(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          116┆ export function compilePlanP(record) {
+    
+          117┆ const source = literalPattern(record.routing);
+    
+           37┆ export function literalPattern(value) {
+    
+          117┆ const source = literalPattern(record.routing);
+    
+    
+                This is how taint reaches the sink:
+    
+          118┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          118┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          117┆ const source = literalPattern(record.routing);
+    
+          Taint flows through these intermediate variables:
+    
+           37┆ export function literalPattern(value) {
+    
+          then reaches:
+    
+           37┆ export function literalPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          117┆ const source = literalPattern(record.routing);
+    
+    
+                This is how taint reaches the sink:
+    
+          118┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          123┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          121┆ export function compilePlanQ(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          121┆ export function compilePlanQ(record) {
+    
+          123┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          123┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          123┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          122┆ const source = textPattern(record.bucket);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          122┆ const source = textPattern(record.bucket);
+    
+    
+                This is how taint reaches the sink:
+    
+          123┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          128┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          126┆ export function compilePlanR(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          126┆ export function compilePlanR(record) {
+    
+          128┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          128┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          128┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          127┆ const source = catalogPattern(record.bucket);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          127┆ const source = catalogPattern(record.bucket);
+    
+    
+                This is how taint reaches the sink:
+    
+          128┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          133┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          131┆ export function compilePlanS(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          131┆ export function compilePlanS(record) {
+    
+          133┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          133┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          133┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          132┆ const source = textPattern(record.marker);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          132┆ const source = textPattern(record.marker);
+    
+    
+                This is how taint reaches the sink:
+    
+          133┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          136┆ export function compilePlanT(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          136┆ export function compilePlanT(record) {
+    
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+          Taint flows through these intermediate variables:
+    
+           33┆ export function catalogFlags(value) {
+    
+          then reaches:
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          138┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          143┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          141┆ export function compilePlanU(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          141┆ export function compilePlanU(record) {
+    
+          143┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          143┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          143┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          142┆ const source = textPattern(record.label);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          142┆ const source = textPattern(record.label);
+    
+    
+                This is how taint reaches the sink:
+    
+          143┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          148┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          146┆ export function compilePlanV(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          146┆ export function compilePlanV(record) {
+    
+          147┆ const source = catalogPattern(record.label);
+    
+           29┆ export function catalogPattern(value) {
+    
+          147┆ const source = catalogPattern(record.label);
+    
+    
+                This is how taint reaches the sink:
+    
+          148┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          148┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          147┆ const source = catalogPattern(record.label);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          147┆ const source = catalogPattern(record.label);
+    
+    
+                This is how taint reaches the sink:
+    
+          148┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          153┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          151┆ export function compilePlanW(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          151┆ export function compilePlanW(record) {
+    
+          153┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          153┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          153┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          152┆ const source = textPattern(record.channel);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          152┆ const source = textPattern(record.channel);
+    
+    
+                This is how taint reaches the sink:
+    
+          153┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          158┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          156┆ export function compilePlanX(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          156┆ export function compilePlanX(record) {
+    
+          157┆ const source = literalPattern(record.channel);
+    
+           37┆ export function literalPattern(value) {
+    
+          157┆ const source = literalPattern(record.channel);
+    
+    
+                This is how taint reaches the sink:
+    
+          158┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          158┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          157┆ const source = literalPattern(record.channel);
+    
+          Taint flows through these intermediate variables:
+    
+           37┆ export function literalPattern(value) {
+    
+          then reaches:
+    
+           37┆ export function literalPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          157┆ const source = literalPattern(record.channel);
+    
+    
+                This is how taint reaches the sink:
+    
+          158┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          163┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          161┆ export function compilePlanY(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          161┆ export function compilePlanY(record) {
+    
+          163┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          163┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          163┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          162┆ const source = textPattern(record.group);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          162┆ const source = textPattern(record.group);
+    
+    
+                This is how taint reaches the sink:
+    
+          163┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          168┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          166┆ export function compilePlanZ(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          166┆ export function compilePlanZ(record) {
+    
+          168┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          168┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          168┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          167┆ const source = catalogPattern(record.group);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          167┆ const source = catalogPattern(record.group);
+    
+    
+                This is how taint reaches the sink:
+    
+          168┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          173┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          171┆ export function compilePlanAA(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          171┆ export function compilePlanAA(record) {
+    
+          173┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          173┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          173┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          172┆ const source = textPattern(record.filter);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          172┆ const source = textPattern(record.filter);
+    
+    
+                This is how taint reaches the sink:
+    
+          173┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          176┆ export function compilePlanAB(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          176┆ export function compilePlanAB(record) {
+    
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+          Taint flows through these intermediate variables:
+    
+           33┆ export function catalogFlags(value) {
+    
+          then reaches:
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          178┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          183┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          181┆ export function compilePlanAC(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          181┆ export function compilePlanAC(record) {
+    
+          183┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          183┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          183┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          182┆ const source = textPattern(record.rule);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          182┆ const source = textPattern(record.rule);
+    
+    
+                This is how taint reaches the sink:
+    
+          183┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          188┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          186┆ export function compilePlanAD(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          186┆ export function compilePlanAD(record) {
+    
+          187┆ const source = catalogPattern(record.rule);
+    
+           29┆ export function catalogPattern(value) {
+    
+          187┆ const source = catalogPattern(record.rule);
+    
+    
+                This is how taint reaches the sink:
+    
+          188┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          188┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          187┆ const source = catalogPattern(record.rule);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          187┆ const source = catalogPattern(record.rule);
+    
+    
+                This is how taint reaches the sink:
+    
+          188┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          193┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          191┆ export function compilePlanAE(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          191┆ export function compilePlanAE(record) {
+    
+          193┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          193┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          193┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          192┆ const source = textPattern(record.term);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          192┆ const source = textPattern(record.term);
+    
+    
+                This is how taint reaches the sink:
+    
+          193┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          198┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          196┆ export function compilePlanAF(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          196┆ export function compilePlanAF(record) {
+    
+          197┆ const source = literalPattern(record.term);
+    
+           37┆ export function literalPattern(value) {
+    
+          197┆ const source = literalPattern(record.term);
+    
+    
+                This is how taint reaches the sink:
+    
+          198┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          198┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          197┆ const source = literalPattern(record.term);
+    
+          Taint flows through these intermediate variables:
+    
+           37┆ export function literalPattern(value) {
+    
+          then reaches:
+    
+           37┆ export function literalPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          197┆ const source = literalPattern(record.term);
+    
+    
+                This is how taint reaches the sink:
+    
+          198┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          203┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          201┆ export function compilePlanAG(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          201┆ export function compilePlanAG(record) {
+    
+          203┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          203┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          203┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          202┆ const source = textPattern(record.reference);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          202┆ const source = textPattern(record.reference);
+    
+    
+                This is how taint reaches the sink:
+    
+          203┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          208┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          206┆ export function compilePlanAH(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          206┆ export function compilePlanAH(record) {
+    
+          208┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          208┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          208┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          207┆ const source = catalogPattern(record.reference);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          207┆ const source = catalogPattern(record.reference);
+    
+    
+                This is how taint reaches the sink:
+    
+          208┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          213┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          211┆ export function compilePlanAI(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          211┆ export function compilePlanAI(record) {
+    
+          213┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          213┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          213┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          212┆ const source = textPattern(record.entry);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          212┆ const source = textPattern(record.entry);
+    
+    
+                This is how taint reaches the sink:
+    
+          213┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          216┆ export function compilePlanAJ(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          216┆ export function compilePlanAJ(record) {
+    
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+          Taint comes from:
+    
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+          Taint flows through these intermediate variables:
+    
+           33┆ export function catalogFlags(value) {
+    
+          then reaches:
+    
+           33┆ export function catalogFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          218┆ return new RegExp(source, catalogFlags(record.mode));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          223┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          221┆ export function compilePlanAK(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          221┆ export function compilePlanAK(record) {
+    
+          223┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          223┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          223┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          222┆ const source = textPattern(record.note);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          222┆ const source = textPattern(record.note);
+    
+    
+                This is how taint reaches the sink:
+    
+          223┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          228┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          226┆ export function compilePlanAL(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          226┆ export function compilePlanAL(record) {
+    
+          227┆ const source = catalogPattern(record.note);
+    
+           29┆ export function catalogPattern(value) {
+    
+          227┆ const source = catalogPattern(record.note);
+    
+    
+                This is how taint reaches the sink:
+    
+          228┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          228┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          227┆ const source = catalogPattern(record.note);
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ export function catalogPattern(value) {
+    
+          then reaches:
+    
+           29┆ export function catalogPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          227┆ const source = catalogPattern(record.note);
+    
+    
+                This is how taint reaches the sink:
+    
+          228┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          233┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          231┆ export function compilePlanAM(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          231┆ export function compilePlanAM(record) {
+    
+          233┆ return new RegExp(source, textFlags(record.flags));
+    
+           25┆ export function textFlags(value) {
+    
+    
+                This is how taint reaches the sink:
+    
+          233┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          233┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+          Taint comes from:
+    
+          232┆ const source = textPattern(record.tag);
+    
+          Taint flows through these intermediate variables:
+    
+           21┆ export function textPattern(value) {
+    
+          then reaches:
+    
+           21┆ export function textPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          232┆ const source = textPattern(record.tag);
+    
+    
+                This is how taint reaches the sink:
+    
+          233┆ return new RegExp(source, textFlags(record.flags));
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          238┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          236┆ export function compilePlanAN(record) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          236┆ export function compilePlanAN(record) {
+    
+          237┆ const source = literalPattern(record.tag);
+    
+           37┆ export function literalPattern(value) {
+    
+          237┆ const source = literalPattern(record.tag);
+    
+    
+                This is how taint reaches the sink:
+    
+          238┆ return new RegExp(source, "");
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+          238┆ return new RegExp(source, "");
+    
+    
+          Taint comes from:
+    
+          237┆ const source = literalPattern(record.tag);
+    
+          Taint flows through these intermediate variables:
+    
+           37┆ export function literalPattern(value) {
+    
+          then reaches:
+    
+           37┆ export function literalPattern(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+          237┆ const source = literalPattern(record.tag);
+    
+    
+                This is how taint reaches the sink:
+    
+          238┆ return new RegExp(source, "");
+    
+                                             
+    apps\node-ledger\src\lib\segmentRules.mjs
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `input` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           19┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+          Taint comes from:
+    
+           18┆ const current = normalizeRule(rule);
+    
+          Taint flows through these intermediate variables:
+    
+            1┆ export function normalizeRule(input) {
+    
+            2┆ const rule = input && typeof input === "object" ? input : {};
+    
+          then reaches:
+    
+            1┆ export function normalizeRule(input) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           18┆ const current = normalizeRule(rule);
+    
+    
+                This is how taint reaches the sink:
+    
+           19┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `rule` function argument, this might allow an attacker to cause a Regular    
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           19┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+          Taint comes from:
+    
+           17┆ export function compilePattern(rule) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           17┆ export function compilePattern(rule) {
+    
+           18┆ const current = normalizeRule(rule);
+    
+            1┆ export function normalizeRule(input) {
+    
+            2┆ const rule = input && typeof input === "object" ? input : {};
+    
+           18┆ const current = normalizeRule(rule);
+    
+    
+                This is how taint reaches the sink:
+    
+           19┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `input` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+          Taint comes from:
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+          Taint flows through these intermediate variables:
+    
+           10┆ const rule = normalizeRule(input);
+    
+           12┆ pattern: escapeRegex(rule.pattern).slice(0, 120),
+    
+           29┆ function escapeRegex(value) {
+    
+          then call to:
+    
+           10┆ const rule = normalizeRule(input);
+    
+          Taint flows through these intermediate variables:
+    
+            1┆ export function normalizeRule(input) {
+    
+            2┆ const rule = input && typeof input === "object" ? input : {};
+    
+          then reaches:
+    
+            1┆ export function normalizeRule(input) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+    
+                This is how taint reaches the sink:
+    
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `rule` function argument, this might allow an attacker to cause a Regular    
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+          Taint comes from:
+    
+           23┆ export function compilePatternManaged(rule) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           23┆ export function compilePatternManaged(rule) {
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+            9┆ export function normalizeRuleManaged(input) {
+    
+           10┆ const rule = normalizeRule(input);
+    
+            1┆ export function normalizeRule(input) {
+    
+            2┆ const rule = input && typeof input === "object" ? input : {};
+    
+           10┆ const rule = normalizeRule(input);
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+    
+                This is how taint reaches the sink:
+    
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+            ⋮┆----------------------------------------
+    ❯❱ javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+          Details: https://sg.run/gr65                                                                        
+                                                                                                              
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+    
+          Taint comes from:
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+          then call to:
+    
+           12┆ pattern: escapeRegex(rule.pattern).slice(0, 120),
+    
+          Taint flows through these intermediate variables:
+    
+           29┆ function escapeRegex(value) {
+    
+          then reaches:
+    
+           29┆ function escapeRegex(value) {
+    
+    
+          Taint flows through these intermediate variables:
+    
+           24┆ const current = normalizeRuleManaged(rule);
+    
+    
+                This is how taint reaches the sink:
+    
+           25┆ const compiled = new RegExp(current.pattern, current.flags);
+    
+                                         
+    apps\node-ledger\src\lib\template.mjs
+     ❱ javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)`. Manually
+          sanitizing input through a manually built list can be circumvented in many situations, and it's    
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.            
+          Details: https://sg.run/AzoB                                                                       
+                                                                                                             
+            2┆ return String(value)
+            3┆   .replaceAll("&", "&amp;")
+            ⋮┆----------------------------------------
+     ❱ javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)         
+          .replaceAll("&", "&amp;")`. Manually sanitizing input through a manually built list can be       
+          circumvented in many situations, and it's better to use a well known sanitization library such as
+          `sanitize-html` or `DOMPurify`.                                                                  
+          Details: https://sg.run/AzoB                                                                     
+                                                                                                           
+            2┆ return String(value)
+            3┆   .replaceAll("&", "&amp;")
+            4┆   .replaceAll("<", "&lt;")
+            ⋮┆----------------------------------------
+     ❱ javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)       
+          .replaceAll("&", "&amp;")     .replaceAll("<", "&lt;")`. Manually sanitizing input through a   
+          manually built list can be circumvented in many situations, and it's better to use a well known
+          sanitization library such as `sanitize-html` or `DOMPurify`.                                   
+          Details: https://sg.run/AzoB                                                                   
+                                                                                                         
+            2┆ return String(value)
+            3┆   .replaceAll("&", "&amp;")
+            4┆   .replaceAll("<", "&lt;")
+            5┆   .replaceAll(">", "&gt;")
+            ⋮┆----------------------------------------
+     ❱ javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)       
+          .replaceAll("&", "&amp;")     .replaceAll("<", "&lt;")     .replaceAll(">", "&gt;")`. Manually 
+          sanitizing input through a manually built list can be circumvented in many situations, and it's
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.        
+          Details: https://sg.run/AzoB                                                                   
+                                                                                                         
+            2┆ return String(value)
+            3┆   .replaceAll("&", "&amp;")
+            4┆   .replaceAll("<", "&lt;")
+            5┆   .replaceAll(">", "&gt;")
+            6┆   .replaceAll('"', "&quot;")

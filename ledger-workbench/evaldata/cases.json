@@ -492,5 +492,805 @@
       }
     ],
     "note": "comparison path"
+  },
+  {
+    "id": "LW1333-003",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 1",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 43,
+      "lineEnd": 43,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-004",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 2",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 48,
+      "lineEnd": 48,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-005",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 3",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 53,
+      "lineEnd": 53,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-006",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 4",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 58,
+      "lineEnd": 58,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-007",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 5",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 63,
+      "lineEnd": 63,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-008",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 6",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 68,
+      "lineEnd": 68,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-009",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 7",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 73,
+      "lineEnd": 73,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-010",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 8",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 78,
+      "lineEnd": 78,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-011",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 9",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 83,
+      "lineEnd": 83,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-012",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 10",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 88,
+      "lineEnd": 88,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-013",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 11",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 93,
+      "lineEnd": 93,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-014",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 12",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 98,
+      "lineEnd": 98,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-015",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 13",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 103,
+      "lineEnd": 103,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-016",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 14",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 108,
+      "lineEnd": 108,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-017",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 15",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 113,
+      "lineEnd": 113,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-018",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 16",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 118,
+      "lineEnd": 118,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-019",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 17",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 123,
+      "lineEnd": 123,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-020",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 18",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 128,
+      "lineEnd": 128,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-021",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 19",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 133,
+      "lineEnd": 133,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-022",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 20",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 138,
+      "lineEnd": 138,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-023",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 21",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 143,
+      "lineEnd": 143,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-024",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 22",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 148,
+      "lineEnd": 148,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-025",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 23",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 153,
+      "lineEnd": 153,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-026",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 24",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 158,
+      "lineEnd": 158,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-027",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 25",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 163,
+      "lineEnd": 163,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-028",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 26",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 168,
+      "lineEnd": 168,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-029",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 27",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 173,
+      "lineEnd": 173,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-030",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 28",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 178,
+      "lineEnd": 178,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-031",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 29",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 183,
+      "lineEnd": 183,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-032",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 30",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 188,
+      "lineEnd": 188,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-033",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 31",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 193,
+      "lineEnd": 193,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-034",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 32",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 198,
+      "lineEnd": 198,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-035",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 33",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 203,
+      "lineEnd": 203,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-036",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 34",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 208,
+      "lineEnd": 208,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-037",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 35",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 213,
+      "lineEnd": 213,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-038",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 36",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 218,
+      "lineEnd": 218,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-039",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 37",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 223,
+      "lineEnd": 223,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-040",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 38",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 228,
+      "lineEnd": 228,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
+  },
+  {
+    "id": "LW1333-041",
+    "variant": "case",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 39",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 233,
+      "lineEnd": 233,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "primary evaluation path"
+  },
+  {
+    "id": "LW1333-042",
+    "variant": "control",
+    "cwe": "CWE-1333",
+    "title": "matching plan flow 40",
+    "sink": {
+      "file": "apps/node-ledger/src/lib/matchPlans.mjs",
+      "lineStart": 238,
+      "lineEnd": 238,
+      "window": 1
+    },
+    "sources": [
+      {
+        "file": "apps/node-ledger/src/features/matching/matchingController.mjs",
+        "lineStart": 59,
+        "lineEnd": 64
+      }
+    ],
+    "note": "comparison path"
   }
 ]

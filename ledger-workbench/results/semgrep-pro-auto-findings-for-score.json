@@ -1,0 +1,653 @@
+[
+  {
+    "rule": "javascript.express.code.vm-express.vm-express",
+    "cwe": "CWE-94",
+    "file": "apps\\node-ledger\\src\\features\\admin\\adminController.mjs",
+    "line": 37,
+    "message": "The application might dynamically evaluate untrusted input, which can lead to a code injection vulnerability. An attacker can execute arbitrary code, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing code containing user input. If this is unavoidable, validate and sanitize the input, and use safe alternatives for evaluating user input."
+  },
+  {
+    "rule": "javascript.node-stdlib.cryptography.crypto-weak-algorithm.crypto-weak-algorithm",
+    "cwe": "CWE-327",
+    "file": "apps\\node-ledger\\src\\features\\admin\\adminController.mjs",
+    "line": 50,
+    "message": "The use of a weak cryptographic algorithm (e.g., SHA-1 or MD5) has been identified. These algorithms are considered insecure due to vulnerabilities that make them susceptible to collision attacks, allowing attackers to compromise data integrity or security. Replace SHA-1 or MD5 with secure hashing algorithms, such as: SHA-256 or higher (e.g., SHA-3)."
+  },
+  {
+    "rule": "javascript.express.file.fs-express.fs-express",
+    "cwe": "CWE-22",
+    "file": "apps\\node-ledger\\src\\features\\exports\\exportController.mjs",
+    "line": 11,
+    "message": "The application builds a file path from potentially untrusted data, which can lead to a path traversal vulnerability. An attacker can manipulate the path which the application uses to access files. If the application does not validate user input and sanitize file paths, sensitive files such as configuration or user data can be accessed, potentially creating or overwriting files. To prevent this vulnerability, validate and sanitize any input that is used to create references to file paths. Also, enforce strict file access controls. For example, choose privileges allowing public-facing applications to access only the required files."
+  },
+  {
+    "rule": "javascript.express.file.fs-express.fs-express",
+    "cwe": "CWE-22",
+    "file": "apps\\node-ledger\\src\\features\\exports\\exportController.mjs",
+    "line": 18,
+    "message": "The application builds a file path from potentially untrusted data, which can lead to a path traversal vulnerability. An attacker can manipulate the path which the application uses to access files. If the application does not validate user input and sanitize file paths, sensitive files such as configuration or user data can be accessed, potentially creating or overwriting files. To prevent this vulnerability, validate and sanitize any input that is used to create references to file paths. Also, enforce strict file access controls. For example, choose privileges allowing public-facing applications to access only the required files."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 43,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 43,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 48,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 48,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 53,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 53,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 58,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 58,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 63,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 63,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 68,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 68,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 73,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 73,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 78,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 78,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 83,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 83,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 88,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 88,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 93,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 93,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 98,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 98,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 103,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 103,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 108,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 108,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 113,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 113,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 118,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 118,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 123,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 123,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 128,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 128,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 133,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 133,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 138,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 138,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 143,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 143,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 148,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 148,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 153,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 153,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 158,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 158,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 163,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 163,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 168,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 168,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 173,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 173,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 178,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 178,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 183,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 183,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 188,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 188,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 193,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 193,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 198,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 198,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 203,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 203,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 208,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 208,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 213,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 213,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 218,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 218,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 223,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 223,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 228,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 228,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 233,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 233,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 238,
+    "message": "RegExp() called with a `record` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\matchPlans.mjs",
+    "line": 238,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\segmentRules.mjs",
+    "line": 19,
+    "message": "RegExp() called with a `input` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\segmentRules.mjs",
+    "line": 19,
+    "message": "RegExp() called with a `rule` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\segmentRules.mjs",
+    "line": 25,
+    "message": "RegExp() called with a `input` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\segmentRules.mjs",
+    "line": 25,
+    "message": "RegExp() called with a `rule` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+    "cwe": "CWE-1333",
+    "file": "apps\\node-ledger\\src\\lib\\segmentRules.mjs",
+    "line": 25,
+    "message": "RegExp() called with a `value` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+  },
+  {
+    "rule": "javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization",
+    "cwe": "CWE-79",
+    "file": "apps\\node-ledger\\src\\lib\\template.mjs",
+    "line": 2,
+    "message": "Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)`. Manually sanitizing input through a manually built list can be circumvented in many situations, and it's better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`."
+  },
+  {
+    "rule": "javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization",
+    "cwe": "CWE-79",
+    "file": "apps\\node-ledger\\src\\lib\\template.mjs",
+    "line": 2,
+    "message": "Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)\n    .replaceAll(\"&\", \"&amp;\")`. Manually sanitizing input through a manually built list can be circumvented in many situations, and it's better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`."
+  },
+  {
+    "rule": "javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization",
+    "cwe": "CWE-79",
+    "file": "apps\\node-ledger\\src\\lib\\template.mjs",
+    "line": 2,
+    "message": "Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)\n    .replaceAll(\"&\", \"&amp;\")\n    .replaceAll(\"<\", \"&lt;\")`. Manually sanitizing input through a manually built list can be circumvented in many situations, and it's better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`."
+  },
+  {
+    "rule": "javascript.audit.detect-replaceall-sanitization.detect-replaceall-sanitization",
+    "cwe": "CWE-79",
+    "file": "apps\\node-ledger\\src\\lib\\template.mjs",
+    "line": 2,
+    "message": "Detected a call to `replaceAll()` in an attempt to HTML escape the string `String(value)\n    .replaceAll(\"&\", \"&amp;\")\n    .replaceAll(\"<\", \"&lt;\")\n    .replaceAll(\">\", \"&gt;\")`. Manually sanitizing input through a manually built list can be circumvented in many situations, and it's better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`."
+  }
+]

@@ -10,6 +10,7 @@ import { createSettingsController } from "./features/settings/settingsController
 import { createSegmentController } from "./features/segments/segmentController.mjs";
 import { createPortalController } from "./features/portal/portalController.mjs";
 import { createMessageController } from "./features/messages/messageController.mjs";
+import { createMatchingController } from "./features/matching/matchingController.mjs";
 import { createJobRuntime } from "./runtime/jobs.mjs";
 
 const db = createLedgerDb();
@@ -23,6 +24,7 @@ const jobs = createJobRuntime({ db });
 const segments = createSegmentController({ db, jobs });
 const portal = createPortalController({ db });
 const messages = createMessageController({ db, jobs });
+const matching = createMatchingController();
 
 const router = createRouter();
 
@@ -57,6 +59,7 @@ router.post("/messages/templates", messages.saveTemplate);
 router.post("/messages/templates-managed", messages.saveTemplateManaged);
 router.post("/messages/render", messages.renderTemplate);
 router.post("/messages/render-managed", messages.renderTemplateManaged);
+router.post("/matching/evaluate", matching.evaluate);
 
 const server = http.createServer((req, res) => router.handle(req, res));
 
