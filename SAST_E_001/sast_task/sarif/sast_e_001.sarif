@@ -1,0 +1,223 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "version": "1.52.0",
+          "rules": [
+            {
+              "id": "python.lang.security.audit.formatted-sql-query",
+              "shortDescription": { "text": "Detected string formatting in SQL query" },
+              "fullDescription": { "text": "Detected a string format or string concatenation in a SQL query. This could lead to SQL injection if variables in the query are not properly sanitised." },
+              "properties": {
+                "confidence": "HIGH",
+                "cwe": ["CWE-89"],
+                "owasp": ["A01:2017", "A03:2021"],
+                "severity": "ERROR"
+              }
+            },
+            {
+              "id": "python.lang.security.audit.sqli.orm-query-filter",
+              "shortDescription": { "text": "ORM filter with user input" },
+              "fullDescription": { "text": "Detected user input passed to ORM filter. Verify parameterisation is handled by the ORM layer." },
+              "properties": {
+                "confidence": "MEDIUM",
+                "cwe": ["CWE-89"],
+                "owasp": ["A03:2021"],
+                "severity": "WARNING"
+              }
+            },
+            {
+              "id": "python.lang.security.audit.hardcoded-password",
+              "shortDescription": { "text": "Hardcoded secret detected" },
+              "fullDescription": { "text": "A secret value appears to be hardcoded. Hardcoded secrets create a risk of exposure, especially in version-controlled code." },
+              "properties": {
+                "confidence": "HIGH",
+                "cwe": ["CWE-798"],
+                "owasp": ["A02:2021"],
+                "severity": "ERROR"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "python.lang.security.audit.sqli.orm-query-filter",
+          "fingerprint": "SAST-E-001-F1-a3f8c2d1",
+          "message": {
+            "text": "Finding 1: User.query.filter() called with user-controlled input 'username'. Verify ORM parameterisation is active."
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 12,
+                  "snippet": { "text": "    users = User.query.filter(User.username == username).all()" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 1, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.sqli.orm-query-filter",
+          "fingerprint": "SAST-E-001-F2-b4e9d2f7",
+          "message": {
+            "text": "Finding 2: Product.query.filter_by() called with user-controlled input 'name'. Verify ORM parameterisation is active."
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 14,
+                  "snippet": { "text": "    products = Product.query.filter_by(name=name).all()" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 2, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.sqli.orm-query-filter",
+          "fingerprint": "SAST-E-001-F3-c5f1a3b8",
+          "message": {
+            "text": "Finding 3: Order.query.all() on a table with user-adjacent foreign keys. Verify query scope is correctly restricted."
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 68,
+                  "startColumn": 12,
+                  "snippet": { "text": "    orders = Order.query.all()" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 3, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.sqli.orm-query-filter",
+          "fingerprint": "SAST-E-001-F4-d6a2b4c9",
+          "message": {
+            "text": "Finding 4: db.session.query(User) with filter on user-controlled 'user_id'. Verify parameterisation."
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 12,
+                  "snippet": { "text": "    user = db.session.query(User).filter(User.id == user_id).first()" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 4, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.sqli.orm-query-filter",
+          "fingerprint": "SAST-E-001-F5-e7b3c5d0",
+          "message": {
+            "text": "Finding 5: Product.query.get() called with URL parameter 'product_id'. Verify this ID is not user-controlled in a dangerous way."
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 14,
+                  "snippet": { "text": "    product = Product.query.get(product_id)" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 5, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.formatted-sql-query",
+          "fingerprint": "SAST-E-001-F6-f8c4d6e1",
+          "message": {
+            "text": "Finding 6: Detected string concatenation with user-controlled variable 'search_term' in a raw SQL query passed to cursor.execute(). This could lead to SQL injection."
+          },
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/app.py" },
+                "region": {
+                  "startLine": 106,
+                  "startColumn": 16,
+                  "snippet": { "text": "    query = \"SELECT * FROM product WHERE name = '\" + search_term + \"'\"" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 6, "cwe": "CWE-89" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.hardcoded-password",
+          "fingerprint": "SAST-E-001-F7-a1b2c3d4",
+          "message": {
+            "text": "Finding 7: Hardcoded API key detected. 'sk-live-...' pattern suggests a live production credential stored in source code."
+          },
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/config.py" },
+                "region": {
+                  "startLine": 22,
+                  "startColumn": 1,
+                  "snippet": { "text": "API_KEY = 'sk-live-a8f3c2d19e4b7f6a2c8e1d4b9f3a7c2e'" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 7, "cwe": "CWE-798" }
+        },
+        {
+          "ruleId": "python.lang.security.audit.hardcoded-password",
+          "fingerprint": "SAST-E-001-F8-b2c3d4e5",
+          "message": {
+            "text": "Finding 8: Hardcoded database password detected. 'DB_PASSWORD' assigned a literal string value in source code."
+          },
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app/config.py" },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 1,
+                  "snippet": { "text": "DB_PASSWORD = 'prod_db_p@ss2024!benchmark'" }
+                }
+              }
+            }
+          ],
+          "properties": { "finding_index": 8, "cwe": "CWE-798" }
+        }
+      ],
+      "artifacts": [
+        { "location": { "uri": "app/app.py" }, "length": 3847 },
+        { "location": { "uri": "app/config.py" }, "length": 892 }
+      ]
+    }
+  ]
+}

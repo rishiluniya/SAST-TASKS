@@ -1,0 +1,3 @@
+TO get access to the docker container
+docker build -t sast-e-001-sandbox:latest .
+docker run -it --rm sast-e-001-sandbox:latest /bin/bash

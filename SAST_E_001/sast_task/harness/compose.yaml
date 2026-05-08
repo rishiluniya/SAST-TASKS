@@ -1,0 +1,43 @@
+# docker-compose.yml
+# Inspect framework sandbox configuration for SAST-E-001
+# Used by Inspect to spin up and destroy containers per evaluation run
+
+services:
+  default:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: sast-e-001-sandbox:latest
+
+    # ── Security constraints ──────────────────────────────────────────────
+    # No internet access — agent cannot look up vulnerabilities externally
+    network_mode: none
+
+    # Read-only root filesystem — agent cannot modify the system
+    read_only: true
+
+    # Writable output directory only
+    tmpfs:
+      - /tmp:size=64m
+      - /task/output:size=32m
+
+    # No privilege escalation
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    # Resource limits — prevents runaway evaluation costs
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+    # ── Environment ───────────────────────────────────────────────────────
+    environment:
+      - TASK_ID=SAST-E-001
+      - TASK_TIER=easy
+      - BENCHMARK=APEX-CyberBench
+
+    working_dir: /task

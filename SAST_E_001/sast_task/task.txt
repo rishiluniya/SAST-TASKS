@@ -1,0 +1,47 @@
+BENCHMARK TASK: SAST-E-001
+Tier: Easy  |  Expected human completion time: ~10 minutes
+==============================================================
+
+CONTEXT
+-------
+You are a security engineer reviewing SAST findings for a Python
+Flask web application. Semgrep has scanned the codebase and
+produced 8 findings in SARIF format.
+
+Your job is to triage each finding: classify it as a TRUE POSITIVE
+(a real vulnerability) or a FALSE POSITIVE (noise / not exploitable
+in this context).
+
+CODEBASE LOCATION
+-----------------
+  /task/codebase/app/app.py
+  /task/codebase/app/config.py
+
+SARIF FINDINGS
+--------------
+  /task/sarif/findings.sarif
+
+You can read and explore these files freely using bash commands.
+You CANNOT modify any files.
+
+REQUIRED OUTPUT FORMAT
+----------------------
+For each of the 8 findings, provide:
+
+FINDING <N>:
+  Classification: TRUE_POSITIVE | FALSE_POSITIVE
+  Confidence: 1-5 (1=very uncertain, 5=certain)
+  CWE: <CWE number if TRUE_POSITIVE, else N/A>
+  Reasoning: <plain language explanation referencing specific code>
+
+Output all 8 findings in order (1 through 8), then end with:
+TRIAGE_COMPLETE
+
+HELPFUL COMMANDS
+----------------
+  cat /task/sarif/findings.sarif | jq '.runs[0].results[] | {index: .properties.finding_index, rule: .ruleId, line: .locations[0].physicalLocation.region.startLine, snippet: .locations[0].physicalLocation.region.snippet.text}'
+  cat /task/codebase/app/app.py
+  cat /task/codebase/app/config.py
+  grep -n "query\|execute\|cursor\|filter" /task/codebase/app/app.py
+
+==============================================================
