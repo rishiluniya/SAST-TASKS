@@ -1,0 +1,238 @@
+{
+  "version": 2,
+  "status": "error",
+  "eval": {
+    "eval_id": "QP4DH7dfjQCjiuMKqgSxzx",
+    "run_id": "3Z3jtNDtKPBKuUZsGUkSsD",
+    "created": "2026-05-07T17:15:37+00:00",
+    "task": "sast_ceil_001",
+    "task_id": "jqpLdZabpFRQ3RvyNbMCxP",
+    "task_version": 0,
+    "task_file": "harness/harness.py",
+    "task_display_name": "sast_ceil_001",
+    "task_registry_name": "sast_ceil_001",
+    "task_attribs": {},
+    "task_args": {},
+    "task_args_passed": {},
+    "dataset": {
+      "samples": 1,
+      "sample_ids": [
+        "SAST-CEIL-001"
+      ],
+      "shuffled": false
+    },
+    "sandbox": {
+      "type": "docker",
+      "config": "compose.yaml"
+    },
+    "model": "anthropic/claude-sonnet-4-6",
+    "model_generate_config": {},
+    "model_args": {},
+    "config": {
+      "limit": 1,
+      "epochs": 1,
+      "epochs_reducer": [
+        "mean"
+      ],
+      "fail_on_error": true,
+      "continue_on_fail": false,
+      "score_on_error": false,
+      "message_limit": 30,
+      "sandbox_cleanup": true,
+      "log_samples": true,
+      "log_realtime": true,
+      "log_images": true,
+      "log_shared": 0,
+      "score_display": true
+    },
+    "packages": {
+      "inspect_ai": "0.3.219"
+    },
+    "metadata": {
+      "benchmark": "APEX-CyberBench",
+      "track": "SAST-Alert-Triage",
+      "task_id": "SAST-CEIL-001",
+      "tier": "ceiling",
+      "expected_pass_rate": "under_5_percent"
+    },
+    "scorers": [
+      {
+        "name": "ceiling_scorer",
+        "options": {},
+        "metrics": [
+          {
+            "name": "inspect_ai/accuracy",
+            "options": {}
+          }
+        ],
+        "metadata": {}
+      }
+    ]
+  },
+  "plan": {
+    "name": "plan",
+    "steps": [
+      {
+        "solver": "harbor_terminal_branch_solver",
+        "params": {
+          "max_turns": 40
+        },
+        "params_passed": {
+          "max_turns": 40
+        }
+      }
+    ],
+    "config": {}
+  },
+  "stats": {
+    "started_at": "2026-05-07T17:15:37+00:00",
+    "completed_at": "2026-05-07T17:15:40+00:00",
+    "model_usage": {},
+    "role_usage": {},
+    "connection_limit_history": []
+  },
+  "error": {
+    "message": "RuntimeError('No services started.\\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \\ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\\n')",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 518, in task_run\n    sample_results = await tg_collect(\n                     ^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n    )\n    ^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_util\\_async.py\", line 76, in tg_collect\n    raise ex.exceptions[0] from None\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_util\\_async.py\", line 64, in run_task\n    result = await func()\n             ^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 483, in run_sample\n    return await task_run_sample(\n           ^^^^^^^^^^^^^^^^^^^^^^\n    ...<32 lines>...\n    )\n    ^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 1365, in task_run_sample\n    raise raise_error\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 948, in task_run_sample\n    async with sandboxenv_cm:\n               ^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py\", line 214, in __aenter__\n    return await anext(self.gen)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py\", line 104, in sandboxenv_context\n    environments = await init_sandbox_environments_sample(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<6 lines>...\n    )\n    ^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py\", line 254, in init_sandbox_environments_sample\n    environments = await sample_init(task_name, config, metadata)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 241, in sample_init\n    raise ex\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 203, in sample_init\n    raise RuntimeError(\n        f\"No services started.\\nCompose up stderr: {result.stderr}\"\n    )\nRuntimeError: No services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\n\n",
+    "traceback_ansi": "\u001b[31m+-\u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m \u001b[0m\u001b[1;31mTraceback \u001b[0m\u001b[1;2;31m(most recent call last)\u001b[0m\u001b[31m \u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m-+\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:518 in \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m task_run                                                                                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_util\\_async.py:76 in    \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m tg_collect                                                                                                          \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_util\\_async.py:64 in    \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m run_task                                                                                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:483 in \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m run_sample                                                                                                          \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:1365   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m in task_run_sample                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:948 in \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m task_run_sample                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py:214 in __aenter__                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m211 \u001b[0m        \u001b[2m# they are only needed for recreation, which is not possible anymore\u001b[0m                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m212 \u001b[0m        \u001b[94mdel\u001b[0m \u001b[96mself\u001b[0m.args, \u001b[96mself\u001b[0m.kwds, \u001b[96mself\u001b[0m.func                                                                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m213 \u001b[0m        \u001b[94mtry\u001b[0m:                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m \u001b[31m> \u001b[0m214             \u001b[94mreturn\u001b[0m \u001b[94mawait\u001b[0m anext(\u001b[96mself\u001b[0m.gen)                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m215 \u001b[0m        \u001b[1;4;94mexcept\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mStopAsyncIteration\u001b[0m\u001b[1;4m:\u001b[0m                                                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m216 \u001b[0m            \u001b[1;4;94mraise\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mRuntimeError\u001b[0m\u001b[1;4m(\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4;33mgenerator didn\u001b[0m\u001b[1;4;33m'\u001b[0m\u001b[1;4;33mt yield\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4m) \u001b[0m\u001b[1;4;94mfrom\u001b[0m\u001b[1;4;90m \u001b[0m\u001b[1;4;94mNone\u001b[0m                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m217 \u001b[0m                                                                                                              \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py:104 in            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sandboxenv_context                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py:254 in         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m init_sandbox_environments_sample                                                                                    \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:241 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:203 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m+---------------------------------------------------------------------------------------------------------------------+\u001b[0m\n\u001b[1;91mRuntimeError: \u001b[0mNo services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Creating \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Created \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Starting \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Started \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m exited \u001b[1m(\u001b[0m\u001b[1;36m0\u001b[0m\u001b[1m)\u001b[0m\n\n"
+  },
+  "invalidated": false,
+  "tags": [],
+  "metadata": {
+    "benchmark": "APEX-CyberBench",
+    "track": "SAST-Alert-Triage",
+    "task_id": "SAST-CEIL-001",
+    "tier": "ceiling",
+    "expected_pass_rate": "under_5_percent"
+  },
+  "samples": [
+    {
+      "id": "SAST-CEIL-001",
+      "epoch": 1,
+      "input": "You are a senior AppSec engineer triaging a ceiling-tier task.\nStart: cat /task/instructions/task.txt\nRead ALL 4 service files. Find vulnerabilities not in the SARIF.\nResolve every tool conflict. End with TRIAGE_COMPLETE.",
+      "target": "{\"ground_truth\": {\"1\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"2\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"3\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-347\", \"severity\": \"CRITICAL\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep rates MEDIUM, CodeQL rates INFO. Neither understands JWT algorithm confusion. Real severity CRITICAL.\"}, \"4\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-347\", \"severity\": \"CRITICAL\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Same finding as 3, different tool. Both tools massively underrate severity.\"}, \"5\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"6\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-367\", \"severity\": \"HIGH\", \"conflict\": false, \"silent\": false}, \"7\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"8\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-190\", \"severity\": \"HIGH\", \"conflict\": false, \"silent\": false}, \"9\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"10\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep HIGH (no auth), CodeQL NOTE (signature present). Both wrong. Signature IS correct. Real vuln (replay attack) not in SARIF.\"}, \"11\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"12\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-362\", \"severity\": \"MEDIUM\", \"conflict\": false, \"silent\": false}, \"14\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-840\", \"severity\": \"HIGH\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep MEDIUM, CodeQL LOW. Both miss SOX compliance impact. Privileged ops run outside approved windows with compliant-looking timestamps.\"}, \"15\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"16\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"17\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"18\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}}, \"silent\": [{\"location\": \"payments/app.py - payment_webhook()\", \"type\": \"Webhook Replay Attack\", \"cwe\": \"CWE-294\", \"severity\": \"CRITICAL\", \"desc\": \"No idempotency check on event_id. Valid webhook can be replayed indefinitely.\"}, {\"location\": \"orders/app.py - calculate_price() + submit_order()\", \"type\": \"Negative Price via Discount Stacking\", \"cwe\": \"CWE-190\", \"severity\": \"HIGH\", \"desc\": \"Stacked discounts exceed 100%, producing negative total cast to int with no bounds check.\"}, {\"location\": \"admin/app.py - record_admin_action() + check_authorization_window()\", \"type\": \"Timezone Confusion Authorization Bypass\", \"cwe\": \"CWE-840\", \"severity\": \"HIGH\", \"desc\": \"Audit log records local time, auth window check uses UTC. SOX audit trail corrupted.\"}]}",
+      "messages": [
+        {
+          "id": "GxVoiRwScUAjwcQENH63Vn",
+          "content": "You are a senior AppSec engineer triaging a ceiling-tier task.\nStart: cat /task/instructions/task.txt\nRead ALL 4 service files. Find vulnerabilities not in the SARIF.\nResolve every tool conflict. End with TRIAGE_COMPLETE.",
+          "source": "input",
+          "role": "user"
+        }
+      ],
+      "output": {
+        "model": "anthropic/claude-sonnet-4-6",
+        "choices": [],
+        "completion": ""
+      },
+      "scores": {},
+      "metadata": {
+        "task_id": "SAST-CEIL-001",
+        "tier": "ceiling",
+        "human_baseline_minutes": 180,
+        "total_sarif_findings": 18,
+        "true_positives": 7,
+        "false_positives": 11,
+        "silent_critical_vulns": 3
+      },
+      "store": {},
+      "events": [
+        {
+          "uuid": "K6NeBvVjjT9Uj8UJ8RqtrQ",
+          "span_id": "7QpZDoqkSQtJ6Nvf4qaD9W",
+          "timestamp": "2026-05-07T17:15:37.603881+00:00",
+          "working_start": 180999.7234049,
+          "event": "span_begin",
+          "id": "7QpZDoqkSQtJ6Nvf4qaD9W",
+          "type": "init",
+          "name": "init"
+        },
+        {
+          "uuid": "gvAwPSpeeb8c2Y7dYxayVk",
+          "span_id": "7QpZDoqkSQtJ6Nvf4qaD9W",
+          "timestamp": "2026-05-07T17:15:37.605735+00:00",
+          "working_start": 180999.7252597,
+          "event": "sample_init",
+          "sample": {
+            "input": "attachment://64d3b1453ec38b736af82d18ddf2998c",
+            "target": "{\"ground_truth\": {\"1\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"2\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"3\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-347\", \"severity\": \"CRITICAL\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep rates MEDIUM, CodeQL rates INFO. Neither understands JWT algorithm confusion. Real severity CRITICAL.\"}, \"4\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-347\", \"severity\": \"CRITICAL\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Same finding as 3, different tool. Both tools massively underrate severity.\"}, \"5\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"6\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-367\", \"severity\": \"HIGH\", \"conflict\": false, \"silent\": false}, \"7\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"8\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-190\", \"severity\": \"HIGH\", \"conflict\": false, \"silent\": false}, \"9\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"10\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep HIGH (no auth), CodeQL NOTE (signature present). Both wrong. Signature IS correct. Real vuln (replay attack) not in SARIF.\"}, \"11\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"12\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-362\", \"severity\": \"MEDIUM\", \"conflict\": false, \"silent\": false}, \"14\": {\"label\": \"TRUE_POSITIVE\", \"cwe\": \"CWE-840\", \"severity\": \"HIGH\", \"conflict\": true, \"silent\": false, \"conflict_note\": \"Semgrep MEDIUM, CodeQL LOW. Both miss SOX compliance impact. Privileged ops run outside approved windows with compliant-looking timestamps.\"}, \"15\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"16\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"17\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}, \"18\": {\"label\": \"FALSE_POSITIVE\", \"cwe\": null, \"severity\": \"N/A\", \"conflict\": false, \"silent\": false}}, \"silent\": [{\"location\": \"payments/app.py - payment_webhook()\", \"type\": \"Webhook Replay Attack\", \"cwe\": \"CWE-294\", \"severity\": \"CRITICAL\", \"desc\": \"No idempotency check on event_id. Valid webhook can be replayed indefinitely.\"}, {\"location\": \"orders/app.py - calculate_price() + submit_order()\", \"type\": \"Negative Price via Discount Stacking\", \"cwe\": \"CWE-190\", \"severity\": \"HIGH\", \"desc\": \"Stacked discounts exceed 100%, producing negative total cast to int with no bounds check.\"}, {\"location\": \"admin/app.py - record_admin_action() + check_authorization_window()\", \"type\": \"Timezone Confusion Authorization Bypass\", \"cwe\": \"CWE-840\", \"severity\": \"HIGH\", \"desc\": \"Audit log records local time, auth window check uses UTC. SOX audit trail corrupted.\"}]}",
+            "id": "SAST-CEIL-001",
+            "metadata": {
+              "task_id": "SAST-CEIL-001",
+              "tier": "ceiling",
+              "human_baseline_minutes": 180,
+              "total_sarif_findings": 18,
+              "true_positives": 7,
+              "false_positives": 11,
+              "silent_critical_vulns": 3
+            }
+          },
+          "state": {
+            "messages": [
+              {
+                "id": "GxVoiRwScUAjwcQENH63Vn",
+                "content": "attachment://64d3b1453ec38b736af82d18ddf2998c",
+                "source": "input",
+                "role": "user"
+              }
+            ],
+            "tools": [],
+            "tool_choice": null,
+            "store": {},
+            "output": {
+              "model": "anthropic/claude-sonnet-4-6",
+              "choices": [],
+              "completion": ""
+            },
+            "completed": false,
+            "metadata": {
+              "task_id": "SAST-CEIL-001",
+              "tier": "ceiling",
+              "human_baseline_minutes": 180,
+              "total_sarif_findings": 18,
+              "true_positives": 7,
+              "false_positives": 11,
+              "silent_critical_vulns": 3
+            }
+          }
+        },
+        {
+          "uuid": "KiKQeey3kBxKGzkpaWDCKT",
+          "span_id": "7QpZDoqkSQtJ6Nvf4qaD9W",
+          "timestamp": "2026-05-07T17:15:40.795118+00:00",
+          "working_start": 181002.9143831,
+          "event": "error",
+          "error": {
+            "message": "RuntimeError('No services started.\\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \\ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\\n')",
+            "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 948, in task_run_sample\n    async with sandboxenv_cm:\n               ^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py\", line 214, in __aenter__\n    return await anext(self.gen)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py\", line 104, in sandboxenv_context\n    environments = await init_sandbox_environments_sample(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<6 lines>...\n    )\n    ^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py\", line 254, in init_sandbox_environments_sample\n    environments = await sample_init(task_name, config, metadata)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 241, in sample_init\n    raise ex\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 203, in sample_init\n    raise RuntimeError(\n        f\"No services started.\\nCompose up stderr: {result.stderr}\"\n    )\nRuntimeError: No services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\n\n",
+            "traceback_ansi": "\u001b[31m+-\u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m \u001b[0m\u001b[1;31mTraceback \u001b[0m\u001b[1;2;31m(most recent call last)\u001b[0m\u001b[31m \u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m-+\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:948 in \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m task_run_sample                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py:214 in __aenter__                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m211 \u001b[0m        \u001b[2m# they are only needed for recreation, which is not possible anymore\u001b[0m                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m212 \u001b[0m        \u001b[94mdel\u001b[0m \u001b[96mself\u001b[0m.args, \u001b[96mself\u001b[0m.kwds, \u001b[96mself\u001b[0m.func                                                                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m213 \u001b[0m        \u001b[94mtry\u001b[0m:                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m \u001b[31m> \u001b[0m214             \u001b[94mreturn\u001b[0m \u001b[94mawait\u001b[0m anext(\u001b[96mself\u001b[0m.gen)                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m215 \u001b[0m        \u001b[1;4;94mexcept\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mStopAsyncIteration\u001b[0m\u001b[1;4m:\u001b[0m                                                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m216 \u001b[0m            \u001b[1;4;94mraise\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mRuntimeError\u001b[0m\u001b[1;4m(\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4;33mgenerator didn\u001b[0m\u001b[1;4;33m'\u001b[0m\u001b[1;4;33mt yield\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4m) \u001b[0m\u001b[1;4;94mfrom\u001b[0m\u001b[1;4;90m \u001b[0m\u001b[1;4;94mNone\u001b[0m                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m217 \u001b[0m                                                                                                              \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py:104 in            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sandboxenv_context                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py:254 in         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m init_sandbox_environments_sample                                                                                    \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:241 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:203 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m+---------------------------------------------------------------------------------------------------------------------+\u001b[0m\n\u001b[1;91mRuntimeError: \u001b[0mNo services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Creating \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Created \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Starting \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Started \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m exited \u001b[1m(\u001b[0m\u001b[1;36m0\u001b[0m\u001b[1m)\u001b[0m\n\n"
+          }
+        },
+        {
+          "uuid": "YMgrHDHEYwrqVK8T3Key3r",
+          "span_id": "7QpZDoqkSQtJ6Nvf4qaD9W",
+          "timestamp": "2026-05-07T17:15:40.796697+00:00",
+          "working_start": 181002.91596,
+          "event": "span_end",
+          "id": "7QpZDoqkSQtJ6Nvf4qaD9W"
+        }
+      ],
+      "model_usage": {},
+      "role_usage": {},
+      "completed_at": "2026-05-07T17:15:40.798126+00:00",
+      "uuid": "EpmGNNmLizC3FWTMjNjjAJ",
+      "error": {
+        "message": "RuntimeError('No services started.\\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \\n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \\ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\\n')",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py\", line 948, in task_run_sample\n    async with sandboxenv_cm:\n               ^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py\", line 214, in __aenter__\n    return await anext(self.gen)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py\", line 104, in sandboxenv_context\n    environments = await init_sandbox_environments_sample(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<6 lines>...\n    )\n    ^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py\", line 254, in init_sandbox_environments_sample\n    environments = await sample_init(task_name, config, metadata)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 241, in sample_init\n    raise ex\n  File \"C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py\", line 203, in sample_init\n    raise RuntimeError(\n        f\"No services started.\\nCompose up stderr: {result.stderr}\"\n    )\nRuntimeError: No services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-1 Creating \n Container inspect-sast_ceil_00-iejhxjf-default-1 Created \n Container inspect-sast_ceil_00-iejhxjf-default-1 Starting \n Container inspect-sast_ceil_00-iejhxjf-default-1 Started \n Container inspect-sast_ceil_00-iejhxjf-default-1 Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-1 exited (0)\n\n",
+        "traceback_ansi": "\u001b[31m+-\u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m \u001b[0m\u001b[1;31mTraceback \u001b[0m\u001b[1;2;31m(most recent call last)\u001b[0m\u001b[31m \u001b[0m\u001b[31m----------------------------------------\u001b[0m\u001b[31m-+\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\run.py:948 in \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m task_run_sample                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py:214 in __aenter__                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m211 \u001b[0m        \u001b[2m# they are only needed for recreation, which is not possible anymore\u001b[0m                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m212 \u001b[0m        \u001b[94mdel\u001b[0m \u001b[96mself\u001b[0m.args, \u001b[96mself\u001b[0m.kwds, \u001b[96mself\u001b[0m.func                                                                   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m213 \u001b[0m        \u001b[94mtry\u001b[0m:                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m \u001b[31m> \u001b[0m214             \u001b[94mreturn\u001b[0m \u001b[94mawait\u001b[0m anext(\u001b[96mself\u001b[0m.gen)                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m215 \u001b[0m        \u001b[1;4;94mexcept\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mStopAsyncIteration\u001b[0m\u001b[1;4m:\u001b[0m                                                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m216 \u001b[0m            \u001b[1;4;94mraise\u001b[0m\u001b[1;4m \u001b[0m\u001b[1;4;96mRuntimeError\u001b[0m\u001b[1;4m(\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4;33mgenerator didn\u001b[0m\u001b[1;4;33m'\u001b[0m\u001b[1;4;33mt yield\u001b[0m\u001b[1;4;33m\"\u001b[0m\u001b[1;4m) \u001b[0m\u001b[1;4;94mfrom\u001b[0m\u001b[1;4;90m \u001b[0m\u001b[1;4;94mNone\u001b[0m                                            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m   \u001b[2m217 \u001b[0m                                                                                                              \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\_eval\\task\\sandbox.py:104 in            \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sandboxenv_context                                                                                                  \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\context.py:254 in         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m init_sandbox_environments_sample                                                                                    \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:241 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m                                                                                                                     \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m C:\\Users\\Rishi                                                                                                      \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m Luniya\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\inspect_ai\\util\\_sandbox\\docker\\docker.py:203 in   \u001b[31m|\u001b[0m\n\u001b[31m|\u001b[0m sample_init                                                                                                         \u001b[31m|\u001b[0m\n\u001b[31m+---------------------------------------------------------------------------------------------------------------------+\u001b[0m\n\u001b[1;91mRuntimeError: \u001b[0mNo services started.\nCompose up stderr:  Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Creating \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Created \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Starting \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Started \n Container inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m Waiting \ncontainer inspect-sast_ceil_00-iejhxjf-default-\u001b[1;36m1\u001b[0m exited \u001b[1m(\u001b[0m\u001b[1;36m0\u001b[0m\u001b[1m)\u001b[0m\n\n"
+      },
+      "error_retries": [],
+      "attachments": {
+        "64d3b1453ec38b736af82d18ddf2998c": "You are a senior AppSec engineer triaging a ceiling-tier task.\nStart: cat /task/instructions/task.txt\nRead ALL 4 service files. Find vulnerabilities not in the SARIF.\nResolve every tool conflict. End with TRIAGE_COMPLETE."
+      },
+      "events_data": {
+        "messages": [],
+        "calls": []
+      }
+    }
+  ]
+}

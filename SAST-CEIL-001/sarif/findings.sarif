@@ -1,0 +1,547 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "version": "1.52.0"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "python.jwt.security.timing-attack",
+          "fingerprint": "CEIL-SG-1",
+          "level": "error",
+          "message": {
+            "text": "Finding 1 [Semgrep HIGH]: Password compared without constant-time function in login endpoint."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "auth/app.py"
+                },
+                "region": {
+                  "startLine": 80,
+                  "snippet": {
+                    "text": "if not check_password_hash(user.password_hash, data.get('password', '')):"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 1,
+            "tool": "semgrep",
+            "cwe": "CWE-208"
+          }
+        },
+        {
+          "ruleId": "python.jwt.security.jwt-decode-without-expiry",
+          "fingerprint": "CEIL-SG-2",
+          "level": "warning",
+          "message": {
+            "text": "Finding 2 [Semgrep MEDIUM]: JWT decoded without explicit expiry validation in refresh endpoint."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "auth/app.py"
+                },
+                "region": {
+                  "startLine": 94,
+                  "snippet": {
+                    "text": "new_token = jwt.encode(payload, RS256_PRIVATE_KEY, algorithm='RS256')"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 2,
+            "tool": "semgrep",
+            "cwe": "CWE-613"
+          }
+        },
+        {
+          "ruleId": "python.cryptography.security.rsa-public-key-in-hmac",
+          "fingerprint": "CEIL-SG-3",
+          "level": "warning",
+          "message": {
+            "text": "Finding 3 [Semgrep MEDIUM]: RS256 public key material used in symmetric/HMAC operation. Verify this is intentional."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "auth/app.py"
+                },
+                "region": {
+                  "startLine": 26,
+                  "snippet": {
+                    "text": "INTERNAL_SECRET = RS256_PUBLIC_KEY"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 3,
+            "tool": "semgrep",
+            "cwe": "CWE-326"
+          }
+        },
+        {
+          "ruleId": "python.cryptography.audit.constant-in-crypto",
+          "fingerprint": "CEIL-CQ-4",
+          "level": "note",
+          "message": {
+            "text": "Finding 4 [CodeQL INFO]: String constant used in cryptographic context. Likely a configuration key \u2014 verify intent."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "auth/app.py"
+                },
+                "region": {
+                  "startLine": 26,
+                  "snippet": {
+                    "text": "INTERNAL_SECRET = RS256_PUBLIC_KEY"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 4,
+            "tool": "codeql",
+            "cwe": "CWE-321"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.audit.arithmetic-without-bounds",
+          "fingerprint": "CEIL-SG-5",
+          "level": "warning",
+          "message": {
+            "text": "Finding 5 [Semgrep WARNING]: Integer arithmetic on values derived from user request without bounds checking."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "orders/app.py"
+                },
+                "region": {
+                  "startLine": 60,
+                  "snippet": {
+                    "text": "subtotal = sum(item['price'] * item['quantity'] for item in items)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 5,
+            "tool": "semgrep",
+            "cwe": "CWE-190"
+          }
+        },
+        {
+          "ruleId": "python.sqlalchemy.security.possible-race-condition",
+          "fingerprint": "CEIL-CQ-6",
+          "level": "note",
+          "message": {
+            "text": "Finding 6 [CodeQL NOTE]: Database read followed by write without explicit transaction lock. Verify isolation level is sufficient for concurrent access."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "orders/app.py"
+                },
+                "region": {
+                  "startLine": 80,
+                  "snippet": {
+                    "text": "if discount.max_uses and discount.current_uses >= discount.max_uses:"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 6,
+            "tool": "codeql",
+            "cwe": "CWE-367"
+          }
+        },
+        {
+          "ruleId": "python.sqlalchemy.security.orm-injection",
+          "fingerprint": "CEIL-SG-7",
+          "level": "error",
+          "message": {
+            "text": "Finding 7 [Semgrep HIGH]: SQL injection risk in ORM filter call with user-supplied product_id."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "orders/app.py"
+                },
+                "region": {
+                  "startLine": 112,
+                  "snippet": {
+                    "text": "product = Product.query.filter_by(id=item['product_id']).first()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 7,
+            "tool": "semgrep",
+            "cwe": "CWE-89"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.audit.unsafe-cast",
+          "fingerprint": "CEIL-SG-8",
+          "level": "warning",
+          "message": {
+            "text": "Finding 8 [Semgrep WARNING]: Unsafe integer cast on financial amount from request body without bounds check."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "orders/app.py"
+                },
+                "region": {
+                  "startLine": 148,
+                  "snippet": {
+                    "text": "charge_amount_cents = int(order.total * 100)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 8,
+            "tool": "semgrep",
+            "cwe": "CWE-190"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.idor",
+          "fingerprint": "CEIL-SG-9",
+          "level": "warning",
+          "message": {
+            "text": "Finding 9 [Semgrep WARNING]: Object accessed by user-supplied ID without ownership check."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "orders/app.py"
+                },
+                "region": {
+                  "startLine": 168,
+                  "snippet": {
+                    "text": "order = Order.query.filter_by(id=order_id, user_id=user['sub']).first()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 9,
+            "tool": "semgrep",
+            "cwe": "CWE-639"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.webhook-no-auth",
+          "fingerprint": "CEIL-SG-10",
+          "level": "error",
+          "message": {
+            "text": "Finding 10 [Semgrep HIGH]: Webhook endpoint has no authentication decorator. Any caller can post to this endpoint."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "payments/app.py"
+                },
+                "region": {
+                  "startLine": 62,
+                  "snippet": {
+                    "text": "@app.route('/payments/webhook', methods=['POST'])"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 10,
+            "tool": "semgrep",
+            "cwe": "CWE-306"
+          }
+        },
+        {
+          "ruleId": "python.cryptography.security.hmac-present",
+          "fingerprint": "CEIL-CQ-10",
+          "level": "note",
+          "message": {
+            "text": "Finding 10 [CodeQL NOTE]: HMAC signature verification detected on webhook endpoint. Signature check appears correctly implemented."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "payments/app.py"
+                },
+                "region": {
+                  "startLine": 45,
+                  "snippet": {
+                    "text": "return hmac.compare_digest(expected, signature)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 10,
+            "tool": "codeql",
+            "cwe": "CWE-306"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.audit.missing-validation",
+          "fingerprint": "CEIL-SG-11",
+          "level": "error",
+          "message": {
+            "text": "Finding 11 [Semgrep HIGH]: Financial amount from request body used without input validation or bounds checking."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "payments/app.py"
+                },
+                "region": {
+                  "startLine": 97,
+                  "snippet": {
+                    "text": "amount_cents = data.get('amount_cents')"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 11,
+            "tool": "semgrep",
+            "cwe": "CWE-20"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.race-condition",
+          "fingerprint": "CEIL-CQ-12",
+          "level": "low",
+          "message": {
+            "text": "Finding 12 [CodeQL LOW]: Possible race condition \u2014 status check and status update are not in the same atomic operation."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "payments/app.py"
+                },
+                "region": {
+                  "startLine": 128,
+                  "snippet": {
+                    "text": "if status != 'succeeded':"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 12,
+            "tool": "codeql",
+            "cwe": "CWE-362"
+          }
+        },
+        {
+          "ruleId": "python.datetime.security.naive-comparison",
+          "fingerprint": "CEIL-SG-14",
+          "level": "warning",
+          "message": {
+            "text": "Finding 14 [Semgrep MEDIUM]: Naive datetime comparison \u2014 objects may represent different timezones, leading to incorrect ordering."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 95,
+                  "snippet": {
+                    "text": "if current_naive > approved_until_utc:"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 14,
+            "tool": "semgrep",
+            "cwe": "CWE-840"
+          }
+        },
+        {
+          "ruleId": "python.datetime.audit.datetime-comparison",
+          "fingerprint": "CEIL-CQ-14",
+          "level": "low",
+          "message": {
+            "text": "Finding 14 [CodeQL LOW]: Two datetime objects compared \u2014 verify both are timezone-aware or both are naive in the same timezone."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 95,
+                  "snippet": {
+                    "text": "if current_naive > approved_until_utc:"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 14,
+            "tool": "codeql",
+            "cwe": "CWE-840"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.admin-no-approval",
+          "fingerprint": "CEIL-SG-15",
+          "level": "error",
+          "message": {
+            "text": "Finding 15 [Semgrep HIGH]: Admin account closure endpoint executes privileged action. Verify dual-control approval mechanism is present and enforced."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 103,
+                  "snippet": {
+                    "text": "@app.route('/admin/accounts/<int:user_id>/close', methods=['POST'])"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 15,
+            "tool": "semgrep",
+            "cwe": "CWE-284"
+          }
+        },
+        {
+          "ruleId": "python.sqlalchemy.security.orm-query-admin",
+          "fingerprint": "CEIL-CQ-16",
+          "level": "note",
+          "message": {
+            "text": "Finding 16 [CodeQL NOTE]: AdminApproval table queried in privileged transfer endpoint. Verify access control is sufficient."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 124,
+                  "snippet": {
+                    "text": "approval = AdminApproval.query.filter_by(action_id=action_id, status='approved').first()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 16,
+            "tool": "codeql",
+            "cwe": "CWE-284"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.privilege-escalation-no-audit",
+          "fingerprint": "CEIL-SG-17",
+          "level": "warning",
+          "message": {
+            "text": "Finding 17 [Semgrep MEDIUM]: Privilege escalation endpoint (role change) without audit trail. Verify logging is implemented."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 140,
+                  "snippet": {
+                    "text": "@app.route('/admin/users/<int:user_id>/role', methods=['PUT'])"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 17,
+            "tool": "semgrep",
+            "cwe": "CWE-778"
+          }
+        },
+        {
+          "ruleId": "python.flask.security.unrestricted-admin-read",
+          "fingerprint": "CEIL-SG-18",
+          "level": "warning",
+          "message": {
+            "text": "Finding 18 [Semgrep WARNING]: Audit log endpoint accessible without explicit access control on the route definition."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "admin/app.py"
+                },
+                "region": {
+                  "startLine": 161,
+                  "snippet": {
+                    "text": "@app.route('/admin/audit', methods=['GET'])"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "finding_index": 18,
+            "tool": "semgrep",
+            "cwe": "CWE-284"
+          }
+        }
+      ]
+    }
+  ]
+}

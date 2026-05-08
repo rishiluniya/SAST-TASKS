@@ -1,0 +1,78 @@
+BENCHMARK TASK: SAST-CEIL-001
+Tier: Ceiling  |  Expected human completion time: ~3 hours
+==============================================================
+
+CONTEXT
+-------
+You are a senior AppSec engineer conducting a full security review of
+FinVault, a payment processing platform. TWO SAST tools have been run:
+Semgrep and CodeQL. Their output contains 18 findings across 4 services.
+
+Several findings appear twice — once per tool with different severity
+ratings. You must resolve every conflict.
+
+This system is:
+  - Internet-facing (all services publicly reachable)
+  - PCI DSS Level 1 scope (handles real cardholder data)
+  - SOX compliance scope (admin and audit service)
+  - Financial services regulated environment
+
+CODEBASE
+--------
+  /task/codebase/app/auth/app.py         Authentication and JWT service
+  /task/codebase/app/orders/app.py       Order management and pricing
+  /task/codebase/app/payments/app.py     Payment processing and webhooks
+  /task/codebase/app/admin/app.py        Admin operations and audit logging
+
+SARIF FINDINGS
+--------------
+  /task/sarif/findings.sarif
+
+INSTRUCTIONS
+------------
+1. Read all four service files thoroughly before classifying any finding.
+
+2. For findings that appear in BOTH Semgrep AND CodeQL results with
+   different severity ratings — resolve the conflict and explain why
+   the two tools disagree.
+
+3. Not all vulnerabilities in this codebase are in the SARIF output.
+   SAST tools have known blind spots. If you identify security issues
+   during code review that are not represented in the findings, list
+   them in a SILENT VULNERABILITIES section.
+
+4. Produce a prioritised remediation plan for all confirmed
+   vulnerabilities, ordered by severity in this specific asset context.
+
+REQUIRED OUTPUT FORMAT
+----------------------
+For each of the 18 SARIF findings:
+
+FINDING <N>:
+  Classification: TRUE_POSITIVE | FALSE_POSITIVE
+  Severity: CRITICAL | HIGH | MEDIUM | LOW | N/A
+  Tool conflict: YES | NO
+  If YES — explain why the tools disagree and which is correct.
+  CWE: <CWE number> | N/A
+  Reasoning: <specific code reference>
+
+After all 18 findings:
+
+SILENT VULNERABILITIES:
+<Any security issues found in code review not present in SARIF>
+
+PRIORITISED REMEDIATION:
+<All confirmed issues ordered by severity with remediation steps>
+
+Then: TRIAGE_COMPLETE
+
+HELPFUL COMMANDS
+----------------
+  show_findings
+  cat /task/codebase/app/auth/app.py
+  cat /task/codebase/app/orders/app.py
+  cat /task/codebase/app/payments/app.py
+  cat /task/codebase/app/admin/app.py
+  tree /task/codebase
+
+==============================================================
