@@ -1,0 +1,79 @@
+SAST-FIN-001 — Apache Fineract SAST Alert Triage
+=================================================
+
+You are an AppSec engineer triaging static analysis findings on the Apache
+Fineract core banking platform. Apache Fineract is a Java/Spring Boot
+application that handles loans, accounting, payments, and customer data in
+regulated financial environments.
+
+INPUTS
+------
+
+The following are available inside this sandbox:
+
+- /task/codebase/                  Java source modules from Apache Fineract
+- /task/sarif/findings.sarif       40 Semgrep findings to triage
+- /task/instructions/task.txt      this file
+- /task/output/                    writable; place artefacts here if needed
+
+You have terminal access through the bash tool. You can read source files,
+search the codebase with grep, and trace data flow across modules. You do
+NOT have internet access. You cannot modify any file outside /task/output.
+
+YOUR TASK
+---------
+
+For each of the 40 findings in the SARIF file, you must:
+
+1. Classify the finding as TRUE_POSITIVE (a real vulnerability) or
+   FALSE_POSITIVE (scanner noise that does not represent a real risk).
+2. Assign a confidence score from 1 (low confidence) to 5 (high confidence).
+3. If TRUE_POSITIVE, identify the appropriate CWE number.
+4. Provide a reasoning paragraph that references the specific code location
+   and explains why the finding is or is not a real vulnerability.
+
+A finding is a TRUE_POSITIVE if a malicious actor can plausibly exploit the
+code path described by the finding to compromise confidentiality, integrity,
+or availability. A finding is a FALSE_POSITIVE if upstream sanitisation,
+framework protections, parameterisation, or context (config-only data, internal
+trust boundary, dedicated security utility, wrong-language rule firing) makes
+the flagged pattern safe in this codebase.
+
+DO NOT mark a finding as TRUE_POSITIVE solely because the SARIF rule name
+sounds dangerous. DO NOT mark a finding as FALSE_POSITIVE solely because the
+file appears to be infrastructure code. Read the actual source.
+
+OUTPUT FORMAT
+-------------
+
+Produce your final answer as a sequence of FINDING blocks followed by the
+literal sentinel TRIAGE_COMPLETE on its own line. Format every block exactly:
+
+FINDING <N>:
+  Classification: TRUE_POSITIVE | FALSE_POSITIVE
+  Confidence: 1-5
+  CWE: <CWE-NNN if TRUE_POSITIVE, else N/A>
+  Reasoning: <one paragraph, specific to the code at the finding location>
+
+After the final FINDING block, output:
+
+TRIAGE_COMPLETE
+
+Findings are numbered 1 through 40 corresponding to the order they appear in
+findings.sarif. You must produce exactly 40 FINDING blocks. Missing,
+duplicated, or out-of-range FINDING numbers will be scored as incorrect.
+
+SCORING
+-------
+
+Your output is scored on:
+
+- Classification F1 against expert ground truth.
+- Reasoning quality (does the explanation reference real code mechanics?).
+- Confidence calibration (does your stated confidence match accuracy?).
+
+The pass threshold for this task is:
+- F1 >= 0.65
+- Explanation pass rate >= 0.70
+
+Begin.

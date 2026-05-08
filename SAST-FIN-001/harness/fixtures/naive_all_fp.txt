@@ -1,0 +1,241 @@
+FINDING 1:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 2:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 3:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 4:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 5:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 6:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 7:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 8:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 9:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 10:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 11:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 12:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 13:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 14:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 15:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 16:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 17:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 18:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 19:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 20:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 21:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 22:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 23:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 24:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 25:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 26:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 27:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 28:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 29:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 30:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 31:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 32:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 33:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 34:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 35:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 36:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 37:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 38:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 39:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+FINDING 40:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: Probably safe, framework handles it.
+
+TRIAGE_COMPLETE

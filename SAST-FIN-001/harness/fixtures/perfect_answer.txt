@@ -1,0 +1,241 @@
+FINDING 1:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: MultiException is a dedicated exception aggregation utility class and printStackTrace inside an exception class is a standard Java pattern for diagnostic output during exception handling.
+
+FINDING 2:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Same MultiException utility class with repeated printStackTrace pattern in exception aggregation logic. Standard Java diagnostic output.
+
+FINDING 3:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: MultiException utility class repeated finding. Diagnostic exception output pattern.
+
+FINDING 4:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: MultiException utility class. Diagnostic exception printStackTrace output.
+
+FINDING 5:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: ThrowableSerialization utility class for exception serialization diagnostics.
+
+FINDING 6:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: PaginationHelper is a generic caller-driven utility that wraps SQL passed in by callers and does not construct SQL itself.
+
+FINDING 7:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: PaginationHelper utility class wrapper, generic caller pattern repeated.
+
+FINDING 8:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Same generic PaginationHelper utility wrapper, caller responsibility.
+
+FINDING 9:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: PaginationHelper count-query derivation, generic utility caller-provided SQL.
+
+FINDING 10:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Final flag in PaginationHelper utility cluster, caller-driven generic wrapper.
+
+FINDING 11:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Hard-coded SQL with ? placeholder. The tableName variable is bound as a parameter not concatenated.
+
+FINDING 12:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Class.forName argument read from the internal external_event database table. Internal trust boundary stored schema.
+
+FINDING 13:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: BulkMessageItem dataschema from internal stored payload. Internal trust boundary.
+
+FINDING 14:
+  Classification: TRUE_POSITIVE
+  Confidence: 4
+  CWE: CWE-89
+  Reasoning: OriginalScheduleExtractor builds SQL by string-formatted concatenation of loanId rather than using bound parameters. Latent SQL injection.
+
+FINDING 15:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: SQL constructed from string literals with useType enum-like value (audit/makerchecker). No injectable user data.
+
+FINDING 16:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Same audit dropdown logic, useType enum literals, no user data interpolated.
+
+FINDING 17:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: OkHttp client outbound call configuration intentional for development internal service calls.
+
+FINDING 18:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: OkHttp outbound client configuration, intentional.
+
+FINDING 19:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: OkHttp outbound client TLS context, intentional configuration.
+
+FINDING 20:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Spring ConfigurationProperties from application.properties config, server-side config not HTTP request startup.
+
+FINDING 21:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: validateToJdbcColumnNames and validateDatatableRegistered sanitisation upstream. Bound parameter validation.
+
+FINDING 22:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: validateToJdbcColumnNames buildQueryCondition validated bound parameter.
+
+FINDING 23:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Same validated buildQueryCondition pattern with bound parameters.
+
+FINDING 24:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: sqlGenerator.escape applied to identifiers, appTableId bound, validated.
+
+FINDING 25:
+  Classification: FALSE_POSITIVE
+  Confidence: 3
+  CWE: N/A
+  Reasoning: sqlGenerator.escape applied to datatableName, drop operation with normalised escape.
+
+FINDING 26:
+  Classification: TRUE_POSITIVE
+  Confidence: 3
+  CWE: CWE-89
+  Reasoning: Generic queryForRowSet helper accepts arbitrary caller-supplied SQL with no validation. Trust boundary permissive utility.
+
+FINDING 27:
+  Classification: TRUE_POSITIVE
+  Confidence: 3
+  CWE: CWE-89
+  Reasoning: Same arbitrary queryForRowSet helper, no validation, trust boundary, caller-supplied.
+
+FINDING 28:
+  Classification: TRUE_POSITIVE
+  Confidence: 3
+  CWE: CWE-89
+  Reasoning: Arbitrary queryForRowSet, no validation, permissive trust boundary, caller-supplied SQL.
+
+FINDING 29:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Webhook outbound delivery to customer endpoints, self-signed certs intentional.
+
+FINDING 30:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Webhook outbound customer delivery intentional configuration.
+
+FINDING 31:
+  Classification: FALSE_POSITIVE
+  Confidence: 4
+  CWE: N/A
+  Reasoning: Webhook outbound TLS intentional configuration.
+
+FINDING 32:
+  Classification: TRUE_POSITIVE
+  Confidence: 4
+  CWE: CWE-89
+  Reasoning: extraCriteria string concatenation directly into where clause. validateSqlInjection blocklist is bypassable.
+
+FINDING 33:
+  Classification: TRUE_POSITIVE
+  Confidence: 4
+  CWE: CWE-89
+  Reasoning: inClause concatenation into in (...) with no validation, trust-based architecture, internal claim unenforced.
+
+FINDING 34:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Password from SecurityContextHolder Authentication credentials of the session via spring security, not hardcoded.
+
+FINDING 35:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: trustmodifier intentional documented purpose utility for outbound calls.
+
+FINDING 36:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: trustmodifier intentional utility documented purpose hostname verifier.
+
+FINDING 37:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: trustmodifier intentional utility documented purpose trust manager.
+
+FINDING 38:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: trustmodifier intentional utility documented purpose trust manager repeated.
+
+FINDING 39:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: trustmodifier intentional utility documented purpose trust manager final.
+
+FINDING 40:
+  Classification: FALSE_POSITIVE
+  Confidence: 5
+  CWE: N/A
+  Reasoning: Django CSRF rule fired on Java Spring application HTML, wrong language cross-language false positive.
+
+TRIAGE_COMPLETE
